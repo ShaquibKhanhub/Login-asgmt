@@ -245,10 +245,10 @@ function Login() {
       })
       .then((result) => {
         console.log(result.data);
-        toast.success("Added To Cart");
+        toast.success("login succesful");
       })
       .catch((error) => {
-        toast.error("error");
+        toast.error(`${email} not found`);
       });
   };
   return (
@@ -434,7 +434,7 @@ function Login() {
       </FormContainer>
       <ToastContainer />
     </Section>
-  );
+  ); 
 }
 
 export default Login;
