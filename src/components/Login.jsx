@@ -1,3 +1,7 @@
+import axios from "axios";
+import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components";
 
 const Section = styled.section`
@@ -165,7 +169,8 @@ text-decoration-line: underline;
     background: var(--Primary---1, #1575a7);
     border:none;
     color:white;
-    margin-top:2rem
+    margin-top:2rem;
+    cursor:pointer;
   }
   
  
@@ -220,6 +225,32 @@ const Label = styled.label`
 `;
 
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  console.log({ email, password });
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleApi = () => {
+    console.log({ email, password });
+    axios
+      .post("https://reqres.in/api/login", {
+        email: email,
+        password: password,
+      })
+      .then((result) => {
+        console.log(result.data);
+        toast.success("Added To Cart");
+      })
+      .catch((error) => {
+        toast.error("error");
+      });
+  };
   return (
     <Section>
       <ImageContainer>
@@ -360,9 +391,19 @@ function Login() {
           <Text className="label">Login</Text>
         </div>
         <Label htmlFor="">Login ID</Label>
-        <input type="text" placeholder="Enter Login ID" />
+        <input
+          value={email}
+          onChange={handleEmail}
+          type="text"
+          placeholder="Enter Login ID"
+        />
         <Label htmlFor="">Password</Label>
-        <input type="password" placeholder="Enter Password" />
+        <input
+          value={password}
+          onChange={handlePassword}
+          type="password"
+          placeholder="Enter Password"
+        />
         <div className="remember-me">
           <label>
             <input type="checkbox" />
@@ -384,13 +425,14 @@ function Login() {
           </a>
         </div>
 
-        <button type="submit" className="login-button">
+        <button onClick={handleApi} type="submit" className="login-button">
           Login
         </button>
         <div className="register-link">
           Don't have an account? <a href="#">Register</a>
         </div>
       </FormContainer>
+      <ToastContainer />
     </Section>
   );
 }
