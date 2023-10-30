@@ -248,7 +248,7 @@ function Login() {
         toast.success("login succesful");
       })
       .catch((error) => {
-        toast.error(`${email} not found`);
+        toast.error(`${email} you're not authenticated`);
       });
   };
   return (
